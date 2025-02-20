@@ -2,7 +2,6 @@
   "name": "@mshaaban0/contentful-delivery-mcp-server",
   "version": "0.0.1",
   "description": "Contentful MCP Server for Delivery API",
-  "private": true,
   "type": "module",
   "bin": {
     "contentful-delivery-mcp": "./build/index.js"
