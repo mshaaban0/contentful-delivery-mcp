@@ -38,7 +38,12 @@ export const registerQueryEntriesTool = async (server: Server) => {
         });
 
         return {
-          entries: entries.items,
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(entries.items, null, 2),
+            },
+          ],
         };
       }
       default:
