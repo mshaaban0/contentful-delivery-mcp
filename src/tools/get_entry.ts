@@ -42,6 +42,7 @@ export function registerGetEntryTool(server: Server) {
               {
                 type: "text",
                 text: JSON.stringify(entry, null, 2),
+              },
             ],
           };
         } catch (error) {
