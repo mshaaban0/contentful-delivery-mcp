@@ -20,6 +20,7 @@ import {
   GetPromptRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { registerQueryEntriesTool } from "./tools/query_entries.js";
+import { registerGetEntryTool } from "./tools/get_entry.js";
 
 /**
  * Type alias for a note object.
@@ -214,6 +215,7 @@ server.setRequestHandler(GetPromptRequestSchema, async (request) => {
 
 // Register Tools
 registerQueryEntriesTool(server);
+registerGetEntryTool(server);
 
 /**
  * Start the server using stdio transport.

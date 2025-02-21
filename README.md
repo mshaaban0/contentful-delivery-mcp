@@ -13,6 +13,7 @@ This is a TypeScript-based MCP server that implements a simple notes system. It 
 ### Tools
 
 - `query_entries` - Search for entries by keyword or a query sentence
+- `get_entry` - Retrieve a specific Contentful entry by its ID
 
 ## Development
 
