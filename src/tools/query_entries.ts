@@ -2,10 +2,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import {
-  client,
-  client as contentfulClient,
-} from "../clients/contentful-client.js";
+import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
 export const registerQueryEntriesTool = async (server: Server) => {
@@ -36,7 +33,7 @@ export const registerQueryEntriesTool = async (server: Server) => {
         if (!query) {
           throw new Error("Query parameter is required");
         }
-        const entries = await contentfulClient.getEntries({
+        const entries = await client.getEntries({
           query,
         });
 
@@ -55,4 +52,3 @@ export const registerQueryEntriesTool = async (server: Server) => {
   });
 };
 
-export async function queryEntries(server: Server) {}
