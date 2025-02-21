@@ -4,9 +4,17 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { serializeContentfulResponse } from "../utils/contentful-serializer.js";
 
-type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
-type RegisterToolHandler = (name: string, handler: (request: any) => Promise<any>) => void;
+type RegisterTool = (tool: {
+  name: string;
+  description: string;
+  inputSchema: object;
+}) => void;
+type RegisterToolHandler = (
+  name: string,
+  handler: (request: any) => Promise<any>
+) => void;
 
 export function registerGetEntriesTool(
   server: Server,
@@ -49,7 +57,7 @@ export function registerGetEntriesTool(
           {
             type: "text",
             text: serializeContentfulResponse(entries.items),
-          }
+          },
         ],
       };
     } catch (error) {
