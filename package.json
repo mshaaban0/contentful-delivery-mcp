@@ -1,6 +1,6 @@
 {
   "name": "@mshaaban0/contentful-delivery-mcp-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Contentful MCP Server for Delivery API",
   "type": "module",
   "bin": {
