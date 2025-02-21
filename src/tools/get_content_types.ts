@@ -14,13 +14,7 @@ export function registerGetContentTypesTool(server: Server) {
           description: "Get all content types from Contentful",
           inputSchema: {
             type: "object",
-            properties: {
-              limit: {
-                type: "number",
-                description:
-                  "Maximum number of content types to return (default: 100)",
-              },
-            },
+            properties: {},
           },
         },
       ],
@@ -30,14 +24,9 @@ export function registerGetContentTypesTool(server: Server) {
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     switch (request.params.name) {
       case "get_content_types": {
-        const limit = Number(request.params.arguments?.limit) || 100;
 
         try {
-          const contentTypes = await client.getContentTypes({
-            query: {
-              limit,
-            },
-          });
+          const contentTypes = await client.getContentTypes();
           return {
             content: [
               {
