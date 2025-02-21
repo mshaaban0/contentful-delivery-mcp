@@ -23,6 +23,7 @@ import { registerQueryEntriesTool } from "./tools/query_entries.js";
 import { registerGetEntryTool } from "./tools/get_entry.js";
 import { registerGetAssetsTool } from "./tools/get_assets.js";
 import { registerGetEntriesTool } from "./tools/get_entries.js";
+import { registerGetAssetTool } from "./tools/get_asset.js";
 
 /**
  * Type alias for a note object.
@@ -220,6 +221,7 @@ registerQueryEntriesTool(server);
 registerGetEntryTool(server);
 registerGetAssetsTool(server);
 registerGetEntriesTool(server);
+registerGetAssetTool(server);
 
 /**
  * Start the server using stdio transport.
