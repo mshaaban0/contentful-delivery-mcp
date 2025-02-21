@@ -48,7 +48,7 @@ export function registerGetEntriesTool(
         content: [
           {
             type: "text",
-            text: JSON.stringify(entries.items, null, 2),
+            text: serializeContentfulResponse(entries.items),
           }
         ],
       };

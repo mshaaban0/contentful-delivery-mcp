@@ -1,6 +1,7 @@
 import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { serializeContentfulResponse } from "../utils/contentful-serializer.js";
 
 type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
 type RegisterToolHandler = (name: string, handler: (request: any) => Promise<any>) => void;
