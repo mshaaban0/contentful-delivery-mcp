@@ -5,29 +5,26 @@ import {
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
-export function registerGetEntriesTool(server: Server) {
-  server.setRequestHandler(ListToolsRequestSchema, async () => {
-    return {
-      tools: [
-        {
-          name: "get_entries",
-          description: "Get multiple entries from Contentful with optional filters",
-          inputSchema: {
-            type: "object",
-            properties: {
-              limit: {
-                type: "number",
-                description: "Maximum number of entries to return (default: 100)",
-              },
-              contentType: {
-                type: "string",
-                description: "Filter by content type ID",
-              },
-            },
-          },
+type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
+
+export function registerGetEntriesTool(server: Server, registerTool: RegisterTool) {
+  // Register tool metadata
+  registerTool({
+    name: "get_entries",
+    description: "Get multiple entries from Contentful with optional filters",
+    inputSchema: {
+      type: "object",
+      properties: {
+        limit: {
+          type: "number",
+          description: "Maximum number of entries to return (default: 100)",
         },
-      ],
-    };
+        contentType: {
+          type: "string",
+          description: "Filter by content type ID",
+        },
+      },
+    },
   });
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {

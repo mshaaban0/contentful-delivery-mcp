@@ -1,10 +1,3 @@
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
-import { client } from "../clients/contentful-client.js";
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-
 import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
