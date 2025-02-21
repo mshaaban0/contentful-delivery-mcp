@@ -5,6 +5,7 @@ import {
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { serializeContentfulResponse } from "../utils/contentful-serializer.js";
+import { serializeContentfulResponse } from "../utils/contentful-serializer.js";
 
 type RegisterTool = (tool: {
   name: string;
