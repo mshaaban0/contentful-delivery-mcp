@@ -1,30 +1,24 @@
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
-export function registerGetAssetTool(server: Server) {
-  server.setRequestHandler(ListToolsRequestSchema, async () => {
-    return {
-      tools: [
-        {
-          name: "get_asset",
-          description: "Get a specific Contentful asset by ID",
-          inputSchema: {
-            type: "object",
-            properties: {
-              assetId: {
-                type: "string",
-                description: "The ID of the Contentful asset to retrieve",
-              },
-            },
-            required: ["assetId"],
-          },
+type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
+
+export function registerGetAssetTool(server: Server, registerTool: RegisterTool) {
+  // Register tool metadata
+  registerTool({
+    name: "get_asset",
+    description: "Get a specific Contentful asset by ID",
+    inputSchema: {
+      type: "object",
+      properties: {
+        assetId: {
+          type: "string",
+          description: "The ID of the Contentful asset to retrieve",
         },
-      ],
-    };
+      },
+      required: ["assetId"],
+    },
   });
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {

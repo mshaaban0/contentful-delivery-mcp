@@ -1,30 +1,24 @@
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
-export function registerGetEntryTool(server: Server) {
-  server.setRequestHandler(ListToolsRequestSchema, async () => {
-    return {
-      tools: [
-        {
-          name: "get_entry",
-          description: "Get a specific Contentful entry by ID",
-          inputSchema: {
-            type: "object",
-            properties: {
-              entryId: {
-                type: "string",
-                description: "The ID of the Contentful entry to retrieve",
-              },
-            },
-            required: ["entryId"],
-          },
+type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
+
+export function registerGetEntryTool(server: Server, registerTool: RegisterTool) {
+  // Register tool metadata
+  registerTool({
+    name: "get_entry",
+    description: "Get a specific Contentful entry by ID",
+    inputSchema: {
+      type: "object",
+      properties: {
+        entryId: {
+          type: "string",
+          description: "The ID of the Contentful entry to retrieve",
         },
-      ],
-    };
+      },
+      required: ["entryId"],
+    },
   });
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
