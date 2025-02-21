@@ -30,7 +30,7 @@ export function registerGetEntriesTool(
       properties: {
         limit: {
           type: "number",
-          description: "Maximum number of entries to return (default: 100)",
+          description: "Maximum number of entries to return (default: 50)",
         },
         contentType: {
           type: "string",
@@ -42,7 +42,7 @@ export function registerGetEntriesTool(
 
   // Register the tool handler
   registerToolHandler("get_entries", async (request) => {
-    const limit = Number(request.params.arguments?.limit) || 100;
+    const limit = Number(request.params.arguments?.limit) || 50;
     const contentType = request.params.arguments?.contentType;
 
     try {
