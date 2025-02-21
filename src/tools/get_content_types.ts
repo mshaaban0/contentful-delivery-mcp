@@ -17,7 +17,8 @@ export function registerGetContentTypesTool(server: Server) {
             properties: {
               limit: {
                 type: "number",
-                description: "Maximum number of content types to return (default: 100)",
+                description:
+                  "Maximum number of content types to return (default: 100)",
               },
             },
           },
@@ -32,13 +33,17 @@ export function registerGetContentTypesTool(server: Server) {
         const limit = Number(request.params.arguments?.limit) || 100;
 
         try {
-          const contentTypes = await client.getContentTypes({ limit });
+          const contentTypes = await client.getContentTypes({
+            query: {
+              limit,
+            },
+          });
           return {
             content: [
               {
                 type: "text",
                 text: JSON.stringify(contentTypes.items, null, 2),
-              }
+              },
             ],
           };
         } catch (error) {
