@@ -250,7 +250,7 @@ registerGetAssetsTool(server, registerTool);
 registerGetEntriesTool(server, registerTool);
 registerGetAssetTool(server, registerTool);
 registerGetContentTypeTool(server, registerTool);
-registerGetContentTypesTool(server, registerTool);
+registerGetContentTypesTool(server, registerTool, registerToolHandler);
 
 /**
  * Start the server using stdio transport.

@@ -3,8 +3,13 @@ import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
 type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
+type RegisterToolHandler = (name: string, handler: (request: any) => Promise<any>) => void;
 
-export function registerGetContentTypesTool(server: Server, registerTool: RegisterTool) {
+export function registerGetContentTypesTool(
+  server: Server,
+  registerTool: RegisterTool,
+  registerToolHandler: RegisterToolHandler
+) {
   // Register tool metadata
   registerTool({
     name: "get_content_types",
