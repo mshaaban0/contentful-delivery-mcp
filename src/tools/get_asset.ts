@@ -3,8 +3,13 @@ import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
 type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
+type RegisterToolHandler = (name: string, handler: (request: any) => Promise<any>) => void;
 
-export function registerGetAssetTool(server: Server, registerTool: RegisterTool) {
+export function registerGetAssetTool(
+  server: Server,
+  registerTool: RegisterTool,
+  registerToolHandler: RegisterToolHandler
+) {
   // Register tool metadata
   registerTool({
     name: "get_asset",
@@ -21,30 +26,25 @@ export function registerGetAssetTool(server: Server, registerTool: RegisterTool)
     },
   });
 
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    switch (request.params.name) {
-      case "get_asset": {
-        const assetId = String(request.params.arguments?.assetId);
-        if (!assetId) {
-          throw new Error("Asset ID is required");
-        }
+  // Register the tool handler
+  registerToolHandler("get_asset", async (request) => {
+    const assetId = String(request.params.arguments?.assetId);
+    if (!assetId) {
+      throw new Error("Asset ID is required");
+    }
 
-        try {
-          const asset = await client.getAsset(assetId);
-          return {
-            content: [
-              {
-                type: "text",
-                text: JSON.stringify(asset, null, 2),
-              }
-            ],
-          };
-        } catch (error) {
-          throw new Error(`Failed to get asset ${assetId}: ${error}`);
-        }
-      }
-      default:
-        throw new Error("Unknown tool");
+    try {
+      const asset = await client.getAsset(assetId);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(asset, null, 2),
+          }
+        ],
+      };
+    } catch (error) {
+      throw new Error(`Failed to get asset ${assetId}: ${error}`);
     }
   });
 }

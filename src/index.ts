@@ -245,11 +245,11 @@ const registerToolHandler = (name: string, handler: (request: any) => Promise<an
 
 // Register Tools
 registerQueryEntriesTool(server, registerTool, registerToolHandler);
-registerGetEntryTool(server, registerTool);
-registerGetAssetsTool(server, registerTool);
-registerGetEntriesTool(server, registerTool);
-registerGetAssetTool(server, registerTool);
-registerGetContentTypeTool(server, registerTool);
+registerGetEntryTool(server, registerTool, registerToolHandler);
+registerGetAssetsTool(server, registerTool, registerToolHandler);
+registerGetEntriesTool(server, registerTool, registerToolHandler);
+registerGetAssetTool(server, registerTool, registerToolHandler);
+registerGetContentTypeTool(server, registerTool, registerToolHandler);
 registerGetContentTypesTool(server, registerTool, registerToolHandler);
 
 /**
