@@ -5,25 +5,26 @@ import {
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
-export const registerQueryEntriesTool = async (server: Server) => {
-  server.setRequestHandler(ListToolsRequestSchema, async () => {
-    return {
-      tools: [
-        {
-          name: "query_entries",
-          description: "Query and find content in Contentful delivery API",
-          inputSchema: {
-            type: "object",
-            properties: {
-              query: {
-                type: "string",
-                description: "Keywords or query value to search for",
-              },
-            },
-          },
+import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+import { client } from "../clients/contentful-client.js";
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+
+type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
+
+export function registerQueryEntriesTool(server: Server, registerTool: RegisterTool) {
+  // Register tool metadata
+  registerTool({
+    name: "query_entries",
+    description: "Query and find content in Contentful delivery API",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: {
+          type: "string",
+          description: "Keywords or query value to search for",
         },
-      ],
-    };
+      },
+    },
   });
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
