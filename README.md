@@ -14,6 +14,7 @@ This is a TypeScript-based MCP server that implements a simple notes system. It 
 
 - `query_entries` - Search for entries by keyword or a query sentence
 - `get_entry` - Retrieve a specific Contentful entry by its ID
+- `get_entries` - Get multiple entries with optional content type filtering and limits
 - `get_assets` - Retrieve all assets from Contentful with optional limit
 
 ## Development
