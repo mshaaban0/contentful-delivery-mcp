@@ -101,32 +101,41 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
   };
 });
 
+// Store all registered tools
+const registeredTools: Array<{
+  name: string;
+  description: string;
+  inputSchema: object;
+}> = [];
+
 /**
  * Handler that lists available tools.
- * Exposes a single "create_note" tool that lets clients create new notes.
+ * Combines built-in tools with registered Contentful tools.
  */
 server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return {
-    tools: [
-      {
-        name: "create_note",
-        description: "Create a new note",
-        inputSchema: {
-          type: "object",
-          properties: {
-            title: {
-              type: "string",
-              description: "Title of the note",
-            },
-            content: {
-              type: "string",
-              description: "Text content of the note",
-            },
+  const builtInTools = [
+    {
+      name: "create_note",
+      description: "Create a new note",
+      inputSchema: {
+        type: "object",
+        properties: {
+          title: {
+            type: "string",
+            description: "Title of the note",
           },
-          required: ["title", "content"],
+          content: {
+            type: "string",
+            description: "Text content of the note",
+          },
         },
+        required: ["title", "content"],
       },
-    ],
+    },
+  ];
+
+  return {
+    tools: [...builtInTools, ...registeredTools],
   };
 });
 
@@ -218,14 +227,19 @@ server.setRequestHandler(GetPromptRequestSchema, async (request) => {
   };
 });
 
+// Helper function to register a tool
+const registerTool = (tool: { name: string; description: string; inputSchema: object }) => {
+  registeredTools.push(tool);
+};
+
 // Register Tools
-registerQueryEntriesTool(server);
-registerGetEntryTool(server);
-registerGetAssetsTool(server);
-registerGetEntriesTool(server);
-registerGetAssetTool(server);
-registerGetContentTypeTool(server);
-registerGetContentTypesTool(server);
+registerQueryEntriesTool(server, registerTool);
+registerGetEntryTool(server, registerTool);
+registerGetAssetsTool(server, registerTool);
+registerGetEntriesTool(server, registerTool);
+registerGetAssetTool(server, registerTool);
+registerGetContentTypeTool(server, registerTool);
+registerGetContentTypesTool(server, registerTool);
 
 /**
  * Start the server using stdio transport.
