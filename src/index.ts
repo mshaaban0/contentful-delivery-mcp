@@ -24,6 +24,8 @@ import { registerGetEntryTool } from "./tools/get_entry.js";
 import { registerGetAssetsTool } from "./tools/get_assets.js";
 import { registerGetEntriesTool } from "./tools/get_entries.js";
 import { registerGetAssetTool } from "./tools/get_asset.js";
+import { registerGetContentTypeTool } from "./tools/get_content_type.js";
+import { registerGetContentTypesTool } from "./tools/get_content_types.js";
 
 /**
  * Type alias for a note object.
@@ -222,6 +224,8 @@ registerGetEntryTool(server);
 registerGetAssetsTool(server);
 registerGetEntriesTool(server);
 registerGetAssetTool(server);
+registerGetContentTypeTool(server);
+registerGetContentTypesTool(server);
 
 /**
  * Start the server using stdio transport.
