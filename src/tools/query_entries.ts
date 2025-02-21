@@ -2,7 +2,10 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import { client as contentfulClient } from "../clients/contentful-client.js";
+import {
+  client,
+  client as contentfulClient,
+} from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
 export const registerQueryEntriesTool = async (server: Server) => {
