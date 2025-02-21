@@ -1,26 +1,80 @@
 # Contentful Delivery MCP Server
 
-Contentful MCP Server for Delivery API
+A Model Context Protocol (MCP) server that provides seamless access to Contentful's Delivery API. This server enables AI assistants to interact with your Contentful content, making it easier to query and retrieve content entries, assets, and content types.
 
-This is a TypeScript-based MCP server that implements a simple notes system. It demonstrates core MCP concepts by providing:
+## Installation
 
-- Resources representing text notes with URIs and metadata
-- Tools for creating new notes
-- Prompts for generating summaries of notes
+You can install the package globally via npm:
+
+```bash
+npm install -g @mshaaban0/contentful-delivery-mcp-server
+```
+
+## Configuration
+
+Before using the server, you need to set up your Contentful credentials as environment variables:
+
+```bash
+export CONTENTFUL_SPACE_ID="your_space_id"
+export CONTENTFUL_ACCESS_TOKEN="your_access_token"
+```
 
 ## Features
 
 ### Tools
 
-- `query_entries` - Search for entries by keyword or a query sentence
-- `get_entry` - Retrieve a specific Contentful entry by its ID
-- `get_entries` - Get multiple entries with optional content type filtering and limits
-- `get_assets` - Retrieve all assets from Contentful with optional limit
-- `get_asset` - Retrieve a specific Contentful asset by ID
-- `get_content_type` - Retrieve a specific content type by ID
-- `get_content_types` - Retrieve all content types with optional limit
+- `query_entries` - Search for entries using natural language queries
+- `get_entry` - Retrieve a specific Contentful entry by ID
+- `get_entries` - Get multiple entries with content type filtering
+- `get_assets` - List all assets with pagination
+- `get_asset` - Retrieve a specific asset by ID
+- `get_content_type` - Get content type schema by ID
+- `get_content_types` - List all available content types
+
+## Integration with AI Assistants
+
+### Mastra AI
+
+[Mastra AI](https://mastra.ai) is an AI assistant that natively supports MCP. To use this server with Mastra:
+
+1. Install the server globally
+2. Add the server configuration to Mastra's settings:
+
+```json
+{
+  "mcpServers": {
+    "contentful-delivery": {
+      "command": "contentful-delivery-mcp"
+    }
+  }
+}
+```
+
+### Claude Desktop
+
+To use with Claude Desktop, add the server config:
+
+macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+Windows: `%APPDATA%/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "contentful-delivery": {
+      "command": "contentful-delivery-mcp"
+    }
+  }
+}
+```
 
 ## Development
+
+Clone the repository:
+
+```bash
+git clone https://github.com/mshaaban0/contentful-delivery-mcp-server.git
+cd contentful-delivery-mcp-server
+```
 
 Install dependencies:
 
@@ -40,29 +94,22 @@ For development with auto-rebuild:
 npm run watch
 ```
 
-## Installation
-
-To use with Claude Desktop, add the server config:
-
-On MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "contentful-delivery-mcp-server": {
-      "command": "/path/to/contentful-delivery-mcp-server/build/index.js"
-    }
-  }
-}
-```
-
 ### Debugging
 
-Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector), which is available as a package script:
+Use the MCP Inspector for debugging:
 
 ```bash
 npm run inspector
 ```
 
-The Inspector will provide a URL to access debugging tools in your browser.
+This will provide a URL to access debugging tools in your browser.
+
+## License
+
+MIT
+
+## Links
+
+- [Mastra AI](https://mastra.ai)
+- [Contentful](https://www.contentful.com)
+- [Model Context Protocol](https://github.com/anthropic-labs/model-context-protocol)
