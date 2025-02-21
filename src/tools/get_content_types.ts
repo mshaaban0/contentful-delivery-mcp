@@ -16,26 +16,20 @@ export function registerGetContentTypesTool(server: Server, registerTool: Regist
   });
 
   // Register tool handler
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    switch (request.params.name) {
-      case "get_content_types": {
-
-        try {
-          const contentTypes = await client.getContentTypes();
-          return {
-            content: [
-              {
-                type: "text",
-                text: JSON.stringify(contentTypes.items, null, 2),
-              },
-            ],
-          };
-        } catch (error) {
-          throw new Error(`Failed to get content types: ${error}`);
-        }
-      }
-      default:
-        throw new Error("Unknown tool");
+  // Register the tool handler
+  registerToolHandler("get_content_types", async (request) => {
+    try {
+      const contentTypes = await client.getContentTypes();
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(contentTypes.items, null, 2),
+          },
+        ],
+      };
+    } catch (error) {
+      throw new Error(`Failed to get content types: ${error}`);
     }
   });
 }

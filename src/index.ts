@@ -139,35 +139,41 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
+// Store tool handlers
+const toolHandlers: { [key: string]: (request: any) => Promise<any> } = {};
+
 /**
- * Handler for the create_note tool.
- * Creates a new note with the provided title and content, and returns success message.
+ * Handler for all tools including create_note and Contentful tools.
  */
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  switch (request.params.name) {
-    case "create_note": {
-      const title = String(request.params.arguments?.title);
-      const content = String(request.params.arguments?.content);
-      if (!title || !content) {
-        throw new Error("Title and content are required");
-      }
-
-      const id = String(Object.keys(notes).length + 1);
-      notes[id] = { title, content };
-
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Created note ${id}: ${title}`,
-          },
-        ],
-      };
+  const toolName = request.params.name;
+  
+  if (toolName === "create_note") {
+    const title = String(request.params.arguments?.title);
+    const content = String(request.params.arguments?.content);
+    if (!title || !content) {
+      throw new Error("Title and content are required");
     }
 
-    default:
-      throw new Error("Unknown tool");
+    const id = String(Object.keys(notes).length + 1);
+    notes[id] = { title, content };
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Created note ${id}: ${title}`,
+        },
+      ],
+    };
   }
+
+  // Check if we have a handler for this tool
+  if (toolHandlers[toolName]) {
+    return toolHandlers[toolName](request);
+  }
+
+  throw new Error("Unknown tool");
 });
 
 /**
@@ -230,6 +236,11 @@ server.setRequestHandler(GetPromptRequestSchema, async (request) => {
 // Helper function to register a tool
 const registerTool = (tool: { name: string; description: string; inputSchema: object }) => {
   registeredTools.push(tool);
+};
+
+// Helper function to register a tool handler
+const registerToolHandler = (name: string, handler: (request: any) => Promise<any>) => {
+  toolHandlers[name] = handler;
 };
 
 // Register Tools
