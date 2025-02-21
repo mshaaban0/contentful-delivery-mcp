@@ -20,9 +20,8 @@ export function registerGetContentTypesTool(
     },
   });
 
-  // Register tool handler
   // Register the tool handler
-  registerToolHandler("get_content_types", async (request) => {
+  registerToolHandler("get_content_types", async (request: any) => {
     try {
       const contentTypes = await client.getContentTypes();
       return {
