@@ -2,6 +2,10 @@
 
 A Model Context Protocol (MCP) server that provides seamless access to Contentful's Delivery API through AI assistants. Query and retrieve content entries, assets, and content types using natural language.
 
+<a href="https://glama.ai/mcp/servers/v84ui258n5">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/v84ui258n5/badge" alt="Contentful Delivery Server MCP server" />
+</a>
+
 ## Quick Start
 
 Install the package in your project:
