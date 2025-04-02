@@ -1,6 +1,6 @@
 {
   "name": "@mshaaban0/contentful-delivery-mcp-server",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Contentful MCP Server for Delivery API",
   "type": "module",
   "bin": {
@@ -16,6 +16,7 @@
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
   },
   "dependencies": {
+    "@contentful/rich-text-plain-text-renderer": "^17.0.0",
     "@modelcontextprotocol/sdk": "^1.8.0",
     "contentful": "^11.5.0"
   },

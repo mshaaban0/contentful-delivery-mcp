@@ -2,6 +2,7 @@ import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { client } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { serializeContentfulResponse } from "../utils/contentful-serializer.js";
+import { extractContentFromEntries } from "../utils/extract-content-from-entries.js";
 
 type RegisterTool = (tool: { name: string; description: string; inputSchema: object }) => void;
 type RegisterToolHandler = (name: string, handler: (request: any) => Promise<any>) => void;
@@ -35,12 +36,16 @@ export function registerQueryEntriesTool(
     const entries = await client.getEntries({
       query,
     });
-
+    const contentTypes = await client.getContentTypes();
+    
+    // Extract content for the model
+    const extractedContent = extractContentFromEntries(entries.items, contentTypes.items);
+    
     return {
       content: [
         {
           type: "text",
-          text: serializeContentfulResponse(entries.items),
+          text: serializeContentfulResponse(entries.items) + "\n\nExtracted Content:\n" + extractedContent,
         },
       ],
     };
