@@ -17,7 +17,7 @@ import { registerGetContentTypesTool } from "./tools/get_content_types.js";
 const server = new Server(
   {
     name: "contentful-delivery-mcp",
-    version: "0.1.0",
+    version: "0.2.0",
   },
   {
     capabilities: {
@@ -81,11 +81,13 @@ server.setRequestHandler(
 
 // Handle tool execution
 server.setRequestHandler(
-  z.object({ 
+  z.object({
     method: z.literal("tools/call"),
-    params: z.object({
-      name: z.string()
-    }).optional()
+    params: z
+      .object({
+        name: z.string(),
+      })
+      .optional(),
   }),
   async (request) => {
     const toolName = request.params?.name;
