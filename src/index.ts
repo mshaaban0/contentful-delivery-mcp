@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
 import { registerQueryEntriesTool } from "./tools/query_entries.js";
 import { registerGetEntryTool } from "./tools/get_entry.js";
 import { registerGetAssetsTool } from "./tools/get_assets.js";
@@ -62,6 +63,38 @@ registerGetEntriesTool(server, registerTool, registerToolHandler);
 registerGetAssetTool(server, registerTool, registerToolHandler);
 registerGetContentTypeTool(server, registerTool, registerToolHandler);
 registerGetContentTypesTool(server, registerTool, registerToolHandler);
+
+// Register MCP standard methods
+server.setRequestHandler(
+  z.object({ method: z.literal("resources/list") }),
+  async () => {
+    return { resources: [] };
+  }
+);
+
+server.setRequestHandler(
+  z.object({ method: z.literal("tools/list") }),
+  async () => {
+    return { tools: registeredTools };
+  }
+);
+
+// Handle tool execution
+server.setRequestHandler(
+  z.object({ 
+    method: z.literal("tools/call"),
+    params: z.object({
+      name: z.string()
+    }).optional()
+  }),
+  async (request) => {
+    const toolName = request.params?.name;
+    if (!toolName || !toolHandlers[toolName]) {
+      throw new Error(`Tool not found: ${toolName}`);
+    }
+    return await toolHandlers[toolName](request);
+  }
+);
 
 /**
  * Start the server using stdio transport.
