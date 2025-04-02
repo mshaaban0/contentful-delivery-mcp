@@ -25,6 +25,8 @@ Set up your Contentful credentials:
 ```bash
 export CONTENTFUL_SPACE_ID="your_space_id"
 export CONTENTFUL_ACCESS_TOKEN="your_access_token"
+# Optional: Restrict content to specific content types
+export CONTENTFUL_CONTENT_TYPE_IDS="blogPost,article,product"
 ```
 
 ## Features
@@ -62,7 +64,9 @@ const contentfulClient = new MastraMCPClient({
     args: ["-y", "@mshaaban0/contentful-delivery-mcp-server@latest"],
     env: {
       CONTENTFUL_ACCESS_TOKEN: "your_access_token",
-      CONTENTFUL_SPACE_ID: "your_space_id"
+      CONTENTFUL_SPACE_ID: "your_space_id",
+      // Optional: Restrict content to specific content types
+      CONTENTFUL_CONTENT_TYPE_IDS: "blogPost,article,product"
     }
   }
 });

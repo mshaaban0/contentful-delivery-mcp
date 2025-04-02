@@ -2,7 +2,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import { client } from "../clients/contentful-client.js";
+import { client, getAllowedContentTypeIds } from "../clients/contentful-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { serializeContentfulResponse } from "../utils/contentful-serializer.js";
 import { extractContentFromEntries } from "../utils/extract-content-from-entries.js";
@@ -35,7 +35,14 @@ export function registerGetEntriesTool(
         },
         contentType: {
           type: "string",
-          description: "Filter by content type ID",
+          description: "Filter by a single content type ID",
+        },
+        contentTypeIds: {
+          type: "array",
+          items: {
+            type: "string"
+          },
+          description: "Filter by multiple content type IDs (takes precedence over contentType if both are provided)",
         },
       },
     },
@@ -45,10 +52,23 @@ export function registerGetEntriesTool(
   registerToolHandler("get_entries", async (request) => {
     const limit = Number(request.params.arguments?.limit) || 50;
     const contentType = request.params.arguments?.contentType;
+    const contentTypeIds = request.params.arguments?.contentTypeIds;
 
     try {
       const query: any = { limit };
-      if (contentType) {
+      
+      // Get allowed content types from environment
+      const allowedContentTypes = getAllowedContentTypeIds();
+      
+      // Handle content type filtering
+      if (allowedContentTypes) {
+        // Environment variable takes precedence - always filter by allowed content types
+        query['sys.contentType.sys.id[in]'] = allowedContentTypes.join(',');
+      } else if (contentTypeIds && Array.isArray(contentTypeIds) && contentTypeIds.length > 0) {
+        // When filtering by multiple content types, use 'sys.contentType.sys.id[in]' parameter
+        query['sys.contentType.sys.id[in]'] = contentTypeIds.join(',');
+      } else if (contentType) {
+        // Single content type filter (legacy support)
         query.content_type = contentType;
       }
 
