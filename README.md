@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mshaaban0-contentful-delivery-mcp-badge.png)](https://mseep.ai/app/mshaaban0-contentful-delivery-mcp)
+
 # Contentful Delivery MCP Server
 
 A Model Context Protocol (MCP) server that provides seamless access to Contentful's Delivery API through AI assistants. Query and retrieve content entries, assets, and content types using natural language.
