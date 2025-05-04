@@ -1,5 +1,3 @@
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mshaaban0-contentful-delivery-mcp-badge.png)](https://mseep.ai/app/mshaaban0-contentful-delivery-mcp)
-
 # Contentful Delivery MCP Server
 
 A Model Context Protocol (MCP) server that provides seamless access to Contentful's Delivery API through AI assistants. Query and retrieve content entries, assets, and content types using natural language.
@@ -7,6 +5,8 @@ A Model Context Protocol (MCP) server that provides seamless access to Contentfu
 <a href="https://glama.ai/mcp/servers/v84ui258n5">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/v84ui258n5/badge" alt="Contentful Delivery Server MCP server" />
 </a>
+
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mshaaban0-contentful-delivery-mcp-badge.png)](https://mseep.ai/app/mshaaban0-contentful-delivery-mcp)
 
 ## Quick Start
 
