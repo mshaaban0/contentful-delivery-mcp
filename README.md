@@ -6,6 +6,8 @@ A Model Context Protocol (MCP) server that provides seamless access to Contentfu
   <img width="380" height="200" src="https://glama.ai/mcp/servers/v84ui258n5/badge" alt="Contentful Delivery Server MCP server" />
 </a>
 
+<br />
+
 [![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mshaaban0-contentful-delivery-mcp-badge.png)](https://mseep.ai/app/mshaaban0-contentful-delivery-mcp)
 
 ## Quick Start
